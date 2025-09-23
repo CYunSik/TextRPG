@@ -13,6 +13,7 @@ private:
 	// 직업
 	eJobClass mJob;	// 직업은 플레이어만 있다
 
+
 public:
 	CPlayer();
 	virtual ~CPlayer() override;
@@ -47,6 +48,15 @@ private:
 	void StoreUpdate(const int _message);
 	// 플레이어가 죽었는지
 	bool PlayerIsAlive();
+
+	// 플레이어가 공격
+	void PlayerATK();
+	// 몬스터가 공격
+	void MonsterATK();
+	// 도망가기
+	void CombatRun();
+	// 전투가 끝나고(몬스터가 죽었을때)
+	void CombatEnd();
 
 	// 플레이어 레벨업
 	void PlayerLevelUp();

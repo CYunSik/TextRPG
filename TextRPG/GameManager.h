@@ -8,6 +8,8 @@ private:
 
 	class CMonster* mMonster = nullptr;
 
+	ePlayerCombatMode BossState;
+
 	// 지역 이름
 	eAreaName mAreaName;
 	static string AreaNameToString(eAreaName _areaname);
@@ -45,13 +47,16 @@ public:
 	// 몬스터를 발견했다.
 	// 몬스터를 랜덤하게 생성시켜주는 함수
 	bool CreateMonster();
+	// 보스몬스터 생성
+	bool CreateBoss();
 
 	bool IsValidMonster();
 	void DeleteMonster();
 
 	CMonster* GetMonster() { return mMonster; }
-	CPlayer* GetPlayer() { return mPlayer; }
 #pragma endregion
+
+	CPlayer* GetPlayer() { return mPlayer; }
 
 	bool IsGameOver();
 

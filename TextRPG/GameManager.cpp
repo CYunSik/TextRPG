@@ -55,12 +55,20 @@ bool CGameManager::CreateMonster()
 		assert(0);
 		return false;
 	}
+	return true;
+}
 
-	// 랜덤하게 해당 몬스터 셋팅하기 // 어떤 몬스터냐
+bool CGameManager::CreateBoss()
+{
+	mMonster = new CMonster();
+	mMonster->InitBoss();
+	if (mMonster == nullptr)
+	{
+		assert(0);
+		return false;
+	}
 
-
-
-	return false;
+	return true;
 }
 
 // 몬스터가 있는지
@@ -158,7 +166,7 @@ void CGameManager::Draw()
 	// 화면 초기화
 	SYSCLS;
 
-	// 지금 게임이 몇층에서 진행되고 있는지 출력해준다.
+	// 지금 게임이 어느 지역에서 진행되고 있는지 출력해준다.
 	GameProgress();
 
 	if (mMonster)

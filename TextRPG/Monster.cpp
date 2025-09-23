@@ -16,7 +16,7 @@ CMonster::~CMonster()
 
 bool CMonster::Init()
 {
-	// 몬스터 종료 받고 랜덤하게 스탯을 부여한다.
+	// 몬스터 종료 받고 랜덤하게 스탯을 부여한다. 보스 제외
 	mMonsterType = (eMonsterType)(rand() % (int)eMonsterType::End);
 	
 	switch (mMonsterType)
@@ -38,10 +38,16 @@ bool CMonster::Init()
 		MonsterSetting("스켈레톤", 1, 100, 100, 50, 25, 5);
 		mDrawMonsterImage = GlobalFunc::PrintSkeletonImage;
 		break;
-	case eMonsterType::Boss:
-		MonsterSetting("보스", 5, 200, 150, 100, 30, 10);
-		break;
 	}
+
+	return true;
+}
+
+bool CMonster::InitBoss()
+{
+	mMonsterType = eMonsterType::Boss;
+	MonsterSetting("[보스] 드래곤", 5, 200, 150, 10, 30, 1);
+	mDrawMonsterImage = GlobalFunc::PrintDragonBoss;
 
 	return true;
 }
@@ -100,7 +106,7 @@ string CMonster::MonsteTypeToString(eMonsterType _monstertype)
 	case eMonsterType::Skeleton:
 		return "해골";
 	case eMonsterType::Boss:
-		return "악마";
+		return "용";
 	}
 
 	return string();
