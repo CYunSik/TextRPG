@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/TextRPG/TextRPG.vcxproj
+/TextRPG/TextRPG.vcxproj.filters
