@@ -46,7 +46,7 @@ bool CMonster::Init()
 bool CMonster::InitBoss()
 {
 	mMonsterType = eMonsterType::Boss;
-	MonsterSetting("[보스] 드래곤", 5, 200, 150, 10, 30, 1);
+	MonsterSetting("[보스] 드래곤", 5, 200, 150, 100, 30, 10);
 	mDrawMonsterImage = GlobalFunc::PrintDragonBoss;
 
 	return true;

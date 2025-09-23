@@ -21,15 +21,16 @@ bool CPlayer::Init()
 	printf("      ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ\n");
 
 	// 플레이어 이름 받기
-	COUT("이름을 입력해주세요 : ");
+	COUT("플레이어의 이름을 입력해주세요 : ");
 	cin >> mName;
 
 	// 직업 선택하기
 	int selectJob = 0;
 	do
 	{
+		COUTN("");
 		COUTN("직업을 선택해주세요.");
-		COUTN("1.전사 2.마법사 3.도적 4.궁수");
+		COUTN("[ 1.전사   2.마법사   3.도적   4.궁수] ");
 		cin >> selectJob;
 	} while (selectJob < 1 || selectJob > 4);
 
@@ -69,7 +70,6 @@ void CPlayer::Draw()
 		// 전투 상태일때
 		PlayerCombatDraw();
 	}
-
 }
 
 void CPlayer::Update()
@@ -83,8 +83,6 @@ void CPlayer::Update()
 		break;
 	case ePlayerState::combat:	// 나중에 전투가 시작되었을때
 		CombatStateUpdate(message);
-		break;
-	case ePlayerState::nextArea:	// 다음 지역으로 이동
 		break;
 	}
 }
@@ -132,6 +130,18 @@ void CPlayer::PlayerCombatDraw() const
 	COUTN("\t==================================");
 }
 
+void CPlayer::PlayerStoreDraw() const
+{
+	COUTN("");
+	COUTN("-------------------- 상점 -------------------");
+	COUTN("번호\t아이템\t\t효과\t\t가격");
+	COUTN("1.\t공격 물약\t공격력 + 1\t50원");
+	COUTN("2.\t방어 물약\t방어력 + 1\t50원");
+	COUTN("3.\t최대 체력 물약\t최대 체력 + 15\t50원");
+	COUTN("4.\t경험치 물약\t경험치 + 30\t50원");
+	COUTN("---------------------------------------------");
+}
+
 string CPlayer::JobToString(const eJobClass& _job)
 {
 	switch (_job)
@@ -161,6 +171,7 @@ void CPlayer::BasicStateUpdate(int _message)
 		NextArea(_message);
 		break;
 	case 4:	// 상점
+		StoreUpdate(_message);
 		break;
 	}
 }
@@ -266,7 +277,8 @@ void CPlayer::RestUpdate(const int _message)
 {
 	int Rest = 0;
 
-	COUT("50원을 소모하여 체력 30을 회복하겠습니까? (예 : 1, 아니요 : 2) ");
+	COUTN("50원을 소모하여 체력 30을 회복하겠습니까?");
+	COUT("[예 : 1, 아니요 : 2] : ");
 	cin >> Rest;
 
 	switch (Rest)
@@ -274,8 +286,9 @@ void CPlayer::RestUpdate(const int _message)
 	case 1:	// 체력 회복
 		if (mMoney < 50)
 		{
-			COUTN("골드가 부족합니다.");
+			COUTN("돈이 부족합니다.");
 			SYSPAUSE;
+			break;
 		}
 		else
 		{
@@ -291,7 +304,7 @@ void CPlayer::RestUpdate(const int _message)
 			break;
 		}
 	case 2:	// 탐색으로 돌아가기
-		COUTN("탐색으로 돌아갑니다.");
+		COUTN("메인으로 돌아갑니다.");
 		SYSPAUSE;
 		break;
 	default:
@@ -305,7 +318,7 @@ void CPlayer::NextArea(const int _message)
 	// 다음 지역으로 이동
 	int NextArea = 0;
 	COUTN("보스를 처치 후 다음 지역으로 이동하겠습니까? (보스전은 도망갈 수 없다) [충분히 강해진 후 추천] ");
-	COUT("[예 : 1, 아니요 : 2] : ")
+	COUT("[예 - 1, 아니요 - 2] : ")
 	cin >> NextArea;
 	switch (NextArea)
 	{
@@ -327,7 +340,7 @@ void CPlayer::NextArea(const int _message)
 		SYSPAUSE;
 		break;
 	case 2:
-		COUTN("좀더 강해진 후에 가자.");
+		COUTN("좀 더 강해진 후에 도전하자.");
 		SYSPAUSE;
 		break;
 	default:
@@ -339,7 +352,97 @@ void CPlayer::NextArea(const int _message)
 
 void CPlayer::StoreUpdate(const int _message)
 {
+	// 아이템 번호
+	int ItemNum = 0;
+	PlayerStoreDraw();
 
+	COUTN("");
+	COUTN("상점에 오신걸 환영합니다!");
+	COUT("구매할 아이템 번호를 입력하세요(취소 : 0) : ");
+	cin >> ItemNum;
+
+	switch (ItemNum)
+	{
+	case 0:
+		COUTN("");
+		COUTN("메인으로 돌아갑니다.");
+		SYSPAUSE;
+		break;
+	case 1:
+		if (mMoney < 50)
+		{
+			COUTN("");
+			COUTN("돈이 부족합니다.");
+			SYSPAUSE;
+		}
+		else
+		{
+			COUTN("");
+			COUTN("공격 물약을 구매하였습니다! 공격력 + 1");
+			mATK++;
+			mMoney -= 50;
+			SYSPAUSE;
+		}
+		break;
+	case 2:
+		if (mMoney < 50)
+		{
+			COUTN("");
+			COUTN("돈이 부족합니다.");
+			SYSPAUSE;
+		}
+		else
+		{
+			COUTN("");
+			COUTN("방어 물약을 구매하였습니다! 방어력 + 1");
+			mDEF++;
+			mMoney -= 50;
+			SYSPAUSE;
+		}
+		break;
+	case 3:
+		if (mMoney < 50)
+		{
+			COUTN("");
+			COUTN("돈이 부족합니다.");
+			SYSPAUSE;
+		}
+		else
+		{
+			COUTN("");
+			COUTN("최대 체력 물약을 구매하였습니다! 최대 체력 + 15");
+			mMaxHP += 15;
+			mHP += 15;
+			mMoney -= 50;
+			SYSPAUSE;
+		}
+		break;
+	case 4:
+		if (mMoney < 50)
+		{
+			COUTN("");
+			COUTN("돈이 부족합니다.");
+			SYSPAUSE;
+		}
+		else
+		{
+			COUTN("");
+			COUTN("경험치 물약을 구매하였습니다! 경험치 + 30");
+			mExp += 30;
+			mMoney -= 50;
+
+			if (mExp >= mMaxExp)
+			{
+				PlayerLevelUp();
+			}
+			SYSPAUSE;
+		}
+		break;
+	default:
+		COUTN("");
+		COUTN("잘못된 아이템 번호입니다.");
+		SYSPAUSE;
+	}
 }
 
 bool CPlayer::PlayerIsAlive()
@@ -374,17 +477,20 @@ void CPlayer::PlayerATK()
 		{
 			PlayerATK = rand() % mATK + 1;
 		}
-		// 플레이어가 몬스터 공격
-		pMonster->TakeDamage(PlayerATK - MonsterDEF);
 
+		// 음수방지
 		if ((PlayerATK - MonsterDEF) <= 0)
 		{
+			// 플레이어가 몬스터 공격
+			pMonster->TakeDamage(MinDamage);
 			Sleep(1000);
 			COUTN("몬스터의 방어력 " << MonsterDEF << " 만큼 감소한 데미지 "
 				<< FONTCOLOR_RED << MinDamage << FONTCOLOR_REST << "를 플레이어가 몬스터에게 입혔습니다.");
 		}
 		else
 		{
+			// 플레이어가 몬스터 공격
+			pMonster->TakeDamage(PlayerATK - MonsterDEF);
 			Sleep(1000);
 			COUTN("몬스터의 방어력 " << MonsterDEF << " 만큼 감소한 데미지 "
 				<< FONTCOLOR_RED << PlayerATK - MonsterDEF << FONTCOLOR_REST << "를 플레이어가 몬스터에게 입혔습니다.");
@@ -414,17 +520,18 @@ void CPlayer::MonsterATK()
 			RandMonATK = rand() % MonsterATK + 1;
 		}
 
-		// 몬스터가 플레이어 공격
-		TakeDamage(RandMonATK - mDEF);
-
+		// 음수 방지
 		if ((RandMonATK - mDEF) <= 0)
 		{
+			TakeDamage(MinDamage);
 			Sleep(1000);
 			COUTN("플레이어의 방어력 " << mDEF << " 만큼 감소한 데미지 "
 				<< FONTCOLOR_RED << MinDamage << FONTCOLOR_REST << "를 몬스터가 플레이어에게 입혔습니다.");
 		}
 		else
 		{
+			// 몬스터가 플레이어 공격
+			TakeDamage(RandMonATK - mDEF);
 			Sleep(1000);
 			COUTN("플레이어의 방어력 " << mDEF << " 만큼 감소한 데미지 "
 				<< FONTCOLOR_RED << RandMonATK - mDEF << FONTCOLOR_REST << "를 몬스터가 플레이어에게 입혔습니다.");
@@ -517,7 +624,7 @@ void CPlayer::PlayerLevelUp()
 	COUTN("");
 	COUTN("레벨업!!!");
 	COUTN(mLevel << " 레벨 달성");
-	COUTN("체력 상승 +" << UpHP);
-	COUTN("공격력 상승 +" << UpATK);
-	COUTN("방어력 상승 +" << UpDEF);
+	COUTN("최대 체력 상승 + " << UpHP);
+	COUTN("공격력 상승 + " << UpATK);
+	COUTN("방어력 상승 + " << UpDEF);
 }

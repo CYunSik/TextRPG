@@ -76,7 +76,6 @@ enum class ePlayerState
 	search,
 	// 전투
 	combat,
-    nextArea,
 	END
 };
 

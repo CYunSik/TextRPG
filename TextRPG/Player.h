@@ -31,6 +31,8 @@ private:
 	void PlayerSearchDraw() const;
 	// 플레이어 전투 상태 상태창
 	void PlayerCombatDraw() const;
+	// 플레이어 상점창
+	void PlayerStoreDraw() const;
 	// 숫자 입력받은거 문자로 직업 이름 바꿔주기
 	string JobToString(const eJobClass& _job);
 
