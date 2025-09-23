@@ -104,14 +104,14 @@ string CGameManager::AreaNameToString(eAreaName _areaname)
 {
 	switch (_areaname)
 	{
-	case eAreaName::Tutorial:
-		return "튜토리얼";
 	case eAreaName::Forest:
 		return "모험의 숲";
 	case eAreaName::Rival:
 		return "성장의 강";
 	case eAreaName::Mountaion:
-		return "강자의 사";
+		return "강자의 산";
+	case eAreaName::Hell:
+		return "지옥";
 	}
 
 	return string();

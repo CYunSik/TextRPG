@@ -6,8 +6,6 @@ class CObject
 {
 protected:
 	string mName = "";
-	// 직업
-	eJobClass mJob;
 	// 돈
 	int mMoney = 0;
 	// 경험치
@@ -28,7 +26,6 @@ protected:
 public:
 	// get
 	string GetName() { return mName; }
-	// eJobClass GetJobb() { return mJob; }
 	int GetMoney() { return mMoney; }
 	int GetExp() { return mExp; }
 	int GetLevel() { return mLevel; }

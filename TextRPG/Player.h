@@ -4,7 +4,14 @@
 class CPlayer : public CObject
 {
 private:
+	// 탐색, 전투 구분
 	ePlayerState mState;
+
+	// 전투중 상태를 저장
+	ePlayerCombatMode mCombatMode;
+
+	// 직업
+	eJobClass mJob;	// 직업은 플레이어만 있다
 
 public:
 	CPlayer();
@@ -36,6 +43,8 @@ private:
 	void RestUpdate(const int _message);
 	// 일반 상태에서 다음 지역으로 넘어가기
 	void NextArea(const int _message);
+	// 일반 상태에서 상점선택
+	void StoreUpdate(const int _message);
 	// 플레이어가 죽었는지
 	bool PlayerIsAlive();
 

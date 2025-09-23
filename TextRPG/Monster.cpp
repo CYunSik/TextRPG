@@ -57,7 +57,7 @@ void CMonster::Update()
 
 void CMonster::MonsterSetting(string _name, int _level, int _money, int _exp, int _hp, int _atk, int _def)
 {
-	// 기본 능력치 세팅 한다.
+	// 기본 능력치 세팅
 	mName = _name;
 	mLevel = _level;
 	mMoney = _money;
@@ -99,6 +99,8 @@ string CMonster::MonsteTypeToString(eMonsterType _monstertype)
 		return "오크";
 	case eMonsterType::Skeleton:
 		return "해골";
+	case eMonsterType::Boss:
+		return "악마";
 	}
 
 	return string();

@@ -79,6 +79,16 @@ enum class ePlayerState
 	END
 };
 
+// 플레이어 공격시 모드
+enum class ePlayerCombatMode
+{
+    None,
+    Attack,
+    Defense,
+    Run,
+    MAX
+};
+
 // 탐색
 enum class eEventType
 {
@@ -101,10 +111,10 @@ enum class eMonsterType
 // 지역이름
 enum class eAreaName
 {
-    Tutorial,
     Forest,
     Rival,
-    Mountaion
+    Mountaion,
+    Hell
 };
 
 
@@ -151,6 +161,7 @@ namespace GlobalFunc
 )" << FONTCOLOR_REST << std::endl;
     }
 
+    // 스켈레톤 이미지
     static void PrintSkeletonImage()
     {
         std::cout << FONTCOLOR_BLUE << R"(
@@ -166,6 +177,31 @@ namespace GlobalFunc
               `--------`
 )" << FONTCOLOR_REST << std::endl;
     }
+
+    // 보스 드래곤 이미지
+    static void PrintDemonBoss()
+    {
+        std::cout << R"(
+                     ___====-_  _-====___
+               _--^^^#####//      \\#####^^^--_
+            _-^##########// (    ) \\##########^-_
+           -############//  |\^^/|  \\############-
+         _/############//   (@::@)   \\############\_
+        /#############((     \\//     ))#############\
+       -###############\\    (oo)    //###############-
+      -#################\\  / UUU \  //#################-
+     -###################\\/  (vVv)  \/###################-
+    _#/|##########/\######(   /   \   )######/\##########|\#_
+    |/ |#/\#/\#/\/  \#/\##\  |(O O)|  /##/\#/  \/\#/\#/\#| \|
+    '  |/  V  V  '   V  \\#\|  (_)  |/#//V   '  V  V  \|  '
+       '   '  '      '   / |         | \   '      '  '   '
+                        (  |         |  )
+                       __\ |  .---.  | /__
+                      (vvv(V         V)vvv)
+)" << std::endl;
+    }
+
+
 
 
 
