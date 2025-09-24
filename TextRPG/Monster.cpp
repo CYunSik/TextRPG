@@ -40,14 +40,18 @@ bool CMonster::Init()
 		break;
 	}
 
+	MosterPowerUP(mAreaName);
+
 	return true;
 }
 
 bool CMonster::InitBoss()
 {
 	mMonsterType = eMonsterType::Boss;
-	MonsterSetting("[보스] 드래곤", 5, 200, 150, 100, 30, 10);
+	MonsterSetting("드래곤", 5, 200, 150, 100, 30, 10);
 	mDrawMonsterImage = GlobalFunc::PrintDragonBoss;
+
+	MosterPowerUP(mAreaName);
 
 	return true;
 }
@@ -72,6 +76,51 @@ void CMonster::MonsterSetting(string _name, int _level, int _money, int _exp, in
 	mHP = mMaxHP;
 	mATK = _atk;
 	mDEF = _def;
+}
+
+void CMonster::MosterPowerUP(eAreaName _area)
+{
+	switch (_area)
+	{
+	case eAreaName::Forest:
+		break;
+
+	case eAreaName::Rival:
+		// 능력치, 보상 강화
+		mName += "[강]";
+		mLevel += 5;
+		mMoney = static_cast<int>(mMoney * 1.5f);
+		mExp = static_cast<int>(mExp * 1.5f);
+		mHP = static_cast<int>(mHP * 1.5f);
+		mMaxHP = static_cast<int>(mMaxHP * 1.5f);
+		mATK = static_cast<int>(mATK * 1.5f);
+		mDEF += 5;
+		break;
+
+	case eAreaName::Mountaion:
+		// 능력치, 보상 강화
+		mName += "[산]";
+		mLevel += 10;
+		mMoney = static_cast<int>(mMoney * 2.0f);
+		mExp = static_cast<int>(mExp * 2.0f);
+		mHP = static_cast<int>(mHP * 2.0f);
+		mMaxHP = static_cast<int>(mMaxHP * 2.0f);
+		mATK = static_cast<int>(mATK * 2.0f);
+		mDEF += 10;
+		break;
+
+	case eAreaName::Hell:
+		// 능력치, 보상 강화
+		mName += "[지옥]";
+		mLevel += 20;
+		mMoney = static_cast<int>(mMoney * 3.0f);
+		mExp = static_cast<int>(mExp * 3.0f);
+		mHP = static_cast<int>(mHP * 3.0f);
+		mMaxHP = static_cast<int>(mMaxHP * 3.0f);
+		mATK = static_cast<int>(mATK * 3.0f);
+		mDEF += 25;
+		break;
+	}
 }
 
 void CMonster::MonsterInfoDraw()
@@ -106,20 +155,8 @@ string CMonster::MonsteTypeToString(eMonsterType _monstertype)
 	case eMonsterType::Skeleton:
 		return "해골";
 	case eMonsterType::Boss:
-		return "용";
+		return "용[보스]";
 	}
 
 	return string();
-}
-
-bool CMonster::MonsterIsAlive()
-{
-	if (mHP <= 0)
-	{
-		return false;
-	}
-	else
-	{
-		return true;
-	}
 }

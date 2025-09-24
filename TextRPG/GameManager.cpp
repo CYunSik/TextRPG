@@ -49,7 +49,9 @@ void CGameManager::NextStage()
 bool CGameManager::CreateMonster()
 {
 	// 몬스터를 랜덤하게 생성시켜주는 함수
-	mMonster = new CMonster;
+	mMonster = new CMonster();
+	mMonster->SetAreaNameType(mAreaName);
+	mMonster->Init();
 	if (mMonster == nullptr)
 	{
 		assert(0);
@@ -61,6 +63,7 @@ bool CGameManager::CreateMonster()
 bool CGameManager::CreateBoss()
 {
 	mMonster = new CMonster();
+	mMonster->SetAreaNameType(mAreaName);
 	mMonster->InitBoss();
 	if (mMonster == nullptr)
 	{
@@ -94,11 +97,16 @@ void CGameManager::DeleteMonster()
 
 bool CGameManager::IsGameOver()
 {
-	int PlayerHP = CGameManager::GetInst()->GetPlayer()->GetHP();
+	if (mPlayer == nullptr)
+	{
+		return false;
+	}
+
+	int PlayerHP = mPlayer->GetHP();
 	if (PlayerHP <= 0)
 	{
 		COUTN("");
-		COUTN("플레이어가 죽었습니다!");
+		COUTN("플레이어 [" << mPlayer->GetName() <<"]이 죽었습니다!");
 		COUTN("Game Over!");
 		return false;
 	}

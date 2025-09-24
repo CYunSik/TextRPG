@@ -17,9 +17,9 @@ using std::vector;
 classname();\
 ~classname();\
 public:\
-	static CGameManager* GetInst()\
+	static classname* GetInst()\
 	{\
-		static CGameManager Inst;\
+		static classname Inst;\
 		return &Inst;\
 	}
 
@@ -50,13 +50,15 @@ const std::string FONTCOLOR_BLUE = "\033[34m";
 #define DEFAULT_ATK 10
 #define DEFAULT_DEF 5
 
-// 3초 뜸들이기
-#define SLEEP3 Sleep(1000);\
-COUTN("...");\
-Sleep(1000);\
-COUTN("...");\
-Sleep(1000);\
-COUTN("...");
+// n초 뜸들이기
+#define SLEEP_N(SleepCount)\
+{\
+    for (int i = 0; i < SleepCount; ++i)\
+    {\
+        Sleep(1000);\
+        COUTN("...");\
+    }\
+}
 
 // 직업
 enum class eJobClass
@@ -190,7 +192,7 @@ namespace GlobalFunc
          _/############//    (@::@)   \\############\_
         /#############((      \\//     ))#############\
        -###############\\     (oo)    //###############-
-      -#################\\  / UUU   \//#################-
+      -#################\\  /  UU   \//#################-
      -###################\\/  (vVv)  \/###################-
     _#/|##########/\######(   /   \   )######/\##########|\#_
     |/ |#/\#/\#/\/  \#/\##\  |(O O)|  /##/\#/  \/\#/\#/\#| \|

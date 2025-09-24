@@ -132,13 +132,12 @@ void CPlayer::PlayerCombatDraw() const
 
 void CPlayer::PlayerStoreDraw() const
 {
-	COUTN("");
 	COUTN("-------------------- 상점 -------------------");
 	COUTN("번호\t아이템\t\t효과\t\t가격");
-	COUTN("1.\t공격 물약\t공격력 + 1\t50원");
-	COUTN("2.\t방어 물약\t방어력 + 1\t50원");
-	COUTN("3.\t최대 체력 물약\t최대 체력 + 15\t50원");
-	COUTN("4.\t경험치 물약\t경험치 + 30\t50원");
+	COUTN("  1\t공격 물약\t공격력 + 1\t50원");
+	COUTN("  2\t방어 물약\t방어력 + 1\t50원");
+	COUTN("  3\t최대 체력 물약\t최대 체력 + 15\t50원");
+	COUTN("  4\t경험치 물약\t경험치 + 30\t50원");
 	COUTN("---------------------------------------------");
 }
 
@@ -214,7 +213,7 @@ void CPlayer::SearchUpdate(int _message)
 	// 탐색중입니다.
 	COUTN("탐색 중입니다.");
 	// 3초정도 뜸들이기
-	SLEEP3;
+	SLEEP_N(3);
 
 	// 랜덤하게 탐색
 	int behavior = 0;
@@ -298,7 +297,7 @@ void CPlayer::RestUpdate(const int _message)
 			{
 				mHP = mMaxHP;
 			}
-			SLEEP3;
+			SLEEP_N(3);
 			COUTN("50원을 소모하여 체력 30을 회복하였습니다!");
 			SYSPAUSE;
 			break;
@@ -318,7 +317,7 @@ void CPlayer::NextArea(const int _message)
 	// 다음 지역으로 이동
 	int NextArea = 0;
 	COUTN("보스를 처치 후 다음 지역으로 이동하겠습니까? (보스전은 도망갈 수 없다) [충분히 강해진 후 추천] ");
-	COUT("[예 - 1, 아니요 - 2] : ")
+	COUT("[예 : 1, 아니요 : 2] : ")
 	cin >> NextArea;
 	switch (NextArea)
 	{
@@ -352,6 +351,7 @@ void CPlayer::NextArea(const int _message)
 
 void CPlayer::StoreUpdate(const int _message)
 {
+	SYSCLS;
 	// 아이템 번호
 	int ItemNum = 0;
 	PlayerStoreDraw();
@@ -445,29 +445,16 @@ void CPlayer::StoreUpdate(const int _message)
 	}
 }
 
-bool CPlayer::PlayerIsAlive()
-{
-	if (mHP <= 0)
-	{
-		return false;
-	}
-	else
-	{
-		return true;
-	}
-}
-
 void CPlayer::PlayerATK()
 {
 	CGameManager* GameMgr = CGameManager::GetInst();
-	CPlayer* pPlayer = GameMgr->GetPlayer();
 	CMonster* pMonster = GameMgr->GetMonster();
 
 	// 최소 1 데미지
 	int MinDamage = 1;
 
 	// 플레이어 공격
-	if (pPlayer->PlayerIsAlive())
+	if (mHP > 0)
 	{
 		int MonsterDEF = pMonster->GetDEF();
 		int PlayerATK = rand() % mATK + 1;
@@ -484,16 +471,16 @@ void CPlayer::PlayerATK()
 			// 플레이어가 몬스터 공격
 			pMonster->TakeDamage(MinDamage);
 			Sleep(1000);
-			COUTN("몬스터의 방어력 " << MonsterDEF << " 만큼 감소한 데미지 "
-				<< FONTCOLOR_RED << MinDamage << FONTCOLOR_REST << "를 플레이어가 몬스터에게 입혔습니다.");
+			COUTN(pMonster->GetName() << "의 방어력 " << MonsterDEF << " 만큼 감소한 데미지 "
+				<< FONTCOLOR_RED << MinDamage << FONTCOLOR_REST << "를 " << mName << "이 " << pMonster->GetName() <<"에게 입혔습니다.");
 		}
 		else
 		{
 			// 플레이어가 몬스터 공격
 			pMonster->TakeDamage(PlayerATK - MonsterDEF);
 			Sleep(1000);
-			COUTN("몬스터의 방어력 " << MonsterDEF << " 만큼 감소한 데미지 "
-				<< FONTCOLOR_RED << PlayerATK - MonsterDEF << FONTCOLOR_REST << "를 플레이어가 몬스터에게 입혔습니다.");
+			COUTN(pMonster->GetName() << "의 방어력 " << MonsterDEF << " 만큼 감소한 데미지 "
+				<< FONTCOLOR_RED << PlayerATK - MonsterDEF << FONTCOLOR_REST << "를 " << mName << "이 " << pMonster->GetName() << "에게 입혔습니다.");
 		}
 	}
 }
@@ -501,7 +488,6 @@ void CPlayer::PlayerATK()
 void CPlayer::MonsterATK()
 {
 	CGameManager* GameMgr = CGameManager::GetInst();
-	CPlayer* pPlayer = GameMgr->GetPlayer();
 	CMonster* pMonster = GameMgr->GetMonster();
 
 	// 최소 1 데미지
@@ -512,7 +498,7 @@ void CPlayer::MonsterATK()
 	int RandMonATK = rand() % MonsterATK + 1;
 
 	// 만약 몬스터가 살아있다면
-	if (pMonster->MonsterIsAlive())
+	if (pMonster->GetHP() > 0)
 	{
 		// 공격력의 반이상 수치값만 공격
 		while (RandMonATK <= (MonsterATK / 2))
@@ -525,16 +511,16 @@ void CPlayer::MonsterATK()
 		{
 			TakeDamage(MinDamage);
 			Sleep(1000);
-			COUTN("플레이어의 방어력 " << mDEF << " 만큼 감소한 데미지 "
-				<< FONTCOLOR_RED << MinDamage << FONTCOLOR_REST << "를 몬스터가 플레이어에게 입혔습니다.");
+			COUTN(mName << "의 방어력 " << mDEF << " 만큼 감소한 데미지 "
+				<< FONTCOLOR_RED << MinDamage << FONTCOLOR_REST << "를 " << pMonster->GetName() << "이 " << mName << "에게 입혔습니다.");
 		}
 		else
 		{
 			// 몬스터가 플레이어 공격
 			TakeDamage(RandMonATK - mDEF);
 			Sleep(1000);
-			COUTN("플레이어의 방어력 " << mDEF << " 만큼 감소한 데미지 "
-				<< FONTCOLOR_RED << RandMonATK - mDEF << FONTCOLOR_REST << "를 몬스터가 플레이어에게 입혔습니다.");
+			COUTN(mName << "의 방어력 " << mDEF << " 만큼 감소한 데미지 "
+				<< FONTCOLOR_RED << RandMonATK - mDEF << FONTCOLOR_REST << "를 " << pMonster->GetName() <<"이 " << mName << "에게 입혔습니다.");
 		}
 
 		SYSPAUSE;
@@ -549,12 +535,12 @@ void CPlayer::MonsterATK()
 void CPlayer::CombatRun()
 {
 	CGameManager* GameMgr = CGameManager::GetInst();
-	CPlayer* pPlayer = GameMgr->GetPlayer();
 	CMonster* pMonster = GameMgr->GetMonster();
 
 	int escape = rand() % 100;
 	if (escape >= 50)
 	{
+		SLEEP_N(2);
 		COUTN("도망치는데 성공했습니다!");
 
 		SYSPAUSE;
@@ -565,6 +551,7 @@ void CPlayer::CombatRun()
 	}
 	else
 	{
+		SLEEP_N(2);
 		COUTN("도망치는데 실패했습니다!");
 		MonsterATK();
 	}
@@ -573,14 +560,13 @@ void CPlayer::CombatRun()
 void CPlayer::CombatEnd()
 {
 	CGameManager* GameMgr = CGameManager::GetInst();
-	CPlayer* pPlayer = GameMgr->GetPlayer();
 	CMonster* pMonster = GameMgr->GetMonster();
 
 	int MonsterEXP = pMonster->GetExp();
 	int MonsterMoney = pMonster->GetMoney();
 
 	COUTN("");
-	COUTN("몬스터를 죽였습니다!");
+	IsDead(pMonster->GetName(), pMonster->GetHP());
 	COUTN("획득한 경험치 : " << MonsterEXP << " exp");
 	COUTN("획득한 돈 : " << MonsterMoney << " 원");
 
@@ -601,8 +587,8 @@ void CPlayer::CombatEnd()
 	// 보스전이 끝났다면
 	if (mCombatMode == ePlayerCombatMode::Boss)
 	{
+		mCombatMode = ePlayerCombatMode::None;
 		GameMgr->NextStage();
-		mCombatMode == ePlayerCombatMode::None;
 	}
 }
 
@@ -619,7 +605,6 @@ void CPlayer::PlayerLevelUp()
 	mHP += UpHP;
 	mATK += UpATK;
 	mDEF += UpDEF;
-
 
 	COUTN("");
 	COUTN("레벨업!!!");

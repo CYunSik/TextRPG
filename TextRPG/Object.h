@@ -61,6 +61,7 @@ public:
 	virtual void Update() = 0;
 
 	virtual void TakeDamage(int _damage);
+	virtual bool IsDead(string _name, int _hp);
 
 public:
 	CObject() = default;

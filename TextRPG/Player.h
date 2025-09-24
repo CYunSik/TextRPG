@@ -48,8 +48,6 @@ private:
 	void NextArea(const int _message);
 	// 일반 상태에서 상점선택
 	void StoreUpdate(const int _message);
-	// 플레이어가 죽었는지
-	bool PlayerIsAlive();
 
 	// 플레이어가 공격
 	void PlayerATK();
