@@ -63,6 +63,8 @@ public:
 	virtual void TakeDamage(int _damage);
 	virtual bool IsDead(string _name, int _hp);
 
+	void Save(const string& _filename);
+
 public:
 	CObject() = default;
 	virtual ~CObject() = default;

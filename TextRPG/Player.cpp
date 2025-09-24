@@ -14,11 +14,11 @@ CPlayer::~CPlayer()
 bool CPlayer::Init()
 {
 	// 타이틀 화면
-	printf("      ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ\n");
-	printf("      ㅁ                                    ㅁ\n");
-	printf("      ㅁ         멸  망  의   지 역         ㅁ\n");
-	printf("      ㅁ                                    ㅁ\n");
-	printf("      ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ\n");
+	printf("ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ\n");
+	printf("ㅁ                                    ㅁ\n");
+	printf("ㅁ              Text RPG              ㅁ\n");
+	printf("ㅁ                                    ㅁ\n");
+	printf("ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ\n");
 
 	// 플레이어 이름 받기
 	COUT("플레이어의 이름을 입력해주세요 : ");
@@ -89,7 +89,7 @@ void CPlayer::Update()
 
 void CPlayer::PlayerInfoDraw()
 {
-	COUTN("--------------- 플레이어 정보 ---------------");
+	COUTN("---------------- 플레이어 정보 --------------");
 	// 이름
 	COUT("이름\t: " << mName << "\t\t|\t");
 	// 직업
@@ -600,7 +600,7 @@ void CPlayer::PlayerLevelUp()
 
 	mExp = mExp - mMaxExp;
 	mLevel += 1;
-	mMaxExp += 10;
+	mMaxExp += 20;
 	mMaxHP += UpHP;
 	mHP += UpHP;
 	mATK += UpATK;

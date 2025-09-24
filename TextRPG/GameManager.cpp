@@ -154,7 +154,7 @@ bool CGameManager::Init()
 
 void CGameManager::GameProgress()
 {
-	COUTN("----------------- 멸망의 지역 ---------------");
+	COUTN("------------------ Text RPG -----------------");
 	COUTN("                                           ");
 	COUTN("                   " << AreaNameToString(mAreaName));
 	COUTN("                                           ");

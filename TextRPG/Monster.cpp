@@ -30,13 +30,18 @@ bool CMonster::Init()
 		break;
 
 	case eMonsterType::Goblin:
-		MonsterSetting("고블린", 1, 50, 70, 40, 20, 3);
+		MonsterSetting("고블린", 1, 50, 70, 40, 17, 3);
 		mDrawMonsterImage = GlobalFunc::PrintGoblinImage;
 		break;
 
 	case eMonsterType::Skeleton:
-		MonsterSetting("스켈레톤", 1, 100, 100, 50, 25, 5);
+		MonsterSetting("스켈레톤", 1, 70, 90, 50, 20, 5);
 		mDrawMonsterImage = GlobalFunc::PrintSkeletonImage;
+		break;
+
+	case eMonsterType::Snake:
+		MonsterSetting("뱀", 1, 100, 110, 60, 23, 7);
+		mDrawMonsterImage = GlobalFunc::PrintSnakeImage;
 		break;
 	}
 

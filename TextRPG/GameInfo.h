@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <Windows.h>
+#include <fstream>
 
 using std::cout;
 using std::cin;
@@ -107,6 +108,7 @@ enum class eMonsterType
     Slime,
     Goblin,
     Skeleton,
+    Snake,
     End,
     Boss
 };
@@ -178,6 +180,30 @@ namespace GlobalFunc
              | \IIIIII/ |
              \          /
               `--------`
+)" << FONTCOLOR_REST << std::endl;
+    }
+
+    // 뱀 이미지
+    static void PrintSnakeImage()
+    {
+        std::cout << FONTCOLOR_GREEN << R"(
+                       /^\/^\
+                     _|__|  O|
+            \/     /~     \_/ \
+             \____|__________/  \
+                    \_______      \
+                            `\     \                 \
+                              |     |                  \
+                             /      /                    \
+                            /     /                       \
+                          /      /                         \ \
+                         /     /                            \  \
+                       /     /             _----_            \   \
+                      /     /           _-~      ~-_         |   |
+                     (      (        _-~    _--_    ~-_     _/   |
+                      \      ~-____-~    _-~    ~-_    ~-_-~    /
+                        ~-_           _-~          ~-_       _-~
+                           ~--______-~                ~-___-~
 )" << FONTCOLOR_REST << std::endl;
     }
 
