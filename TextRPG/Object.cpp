@@ -22,8 +22,3 @@ bool CObject::IsDead(string _name, int _hp)
 		return true;
 	}
 }
-
-void CObject::Save(const string& _filename)
-{
-	std::ofstream File(_filename);
-}

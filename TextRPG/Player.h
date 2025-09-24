@@ -60,5 +60,10 @@ private:
 
 	// 플레이어 레벨업
 	void PlayerLevelUp();
+
+	// 플레이어 정보 저장
+	void PlayerInfoSave(const string& _filename);
+	// 플레이어 정보 파일 불러오기
+	void PlayerInfoLoad(const string& _filename);
 };
 

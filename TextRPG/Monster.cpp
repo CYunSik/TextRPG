@@ -30,17 +30,17 @@ bool CMonster::Init()
 		break;
 
 	case eMonsterType::Goblin:
-		MonsterSetting("고블린", 1, 50, 70, 40, 17, 3);
+		MonsterSetting("고블린", 2, 50, 70, 40, 17, 3);
 		mDrawMonsterImage = GlobalFunc::PrintGoblinImage;
 		break;
 
 	case eMonsterType::Skeleton:
-		MonsterSetting("스켈레톤", 1, 70, 90, 50, 20, 5);
+		MonsterSetting("스켈레톤", 3, 70, 90, 50, 20, 5);
 		mDrawMonsterImage = GlobalFunc::PrintSkeletonImage;
 		break;
 
 	case eMonsterType::Snake:
-		MonsterSetting("뱀", 1, 100, 110, 60, 23, 7);
+		MonsterSetting("스네이크", 4, 100, 110, 60, 23, 7);
 		mDrawMonsterImage = GlobalFunc::PrintSnakeImage;
 		break;
 	}
@@ -154,11 +154,13 @@ string CMonster::MonsteTypeToString(eMonsterType _monstertype)
 	switch (_monstertype)
 	{
 	case eMonsterType::Slime:
-		return "물질";
+		return "액체";
 	case eMonsterType::Goblin:
 		return "오크";
 	case eMonsterType::Skeleton:
 		return "해골";
+	case eMonsterType::Snake:
+		return "이무기";
 	case eMonsterType::Boss:
 		return "용[보스]";
 	}

@@ -188,6 +188,8 @@ void CPlayer::CombatStateUpdate(const int _message)
 		
 	case 2: // 방어
 		mCombatMode = ePlayerCombatMode::Defense;
+		COUTN("공격을 막았다!");
+		SYSPAUSE;
 		break;
 
 	case 3: // 도망
@@ -297,7 +299,7 @@ void CPlayer::RestUpdate(const int _message)
 			{
 				mHP = mMaxHP;
 			}
-			SLEEP_N(3);
+			COUTN("");
 			COUTN("50원을 소모하여 체력 30을 회복하였습니다!");
 			SYSPAUSE;
 			break;
@@ -588,6 +590,7 @@ void CPlayer::CombatEnd()
 	if (mCombatMode == ePlayerCombatMode::Boss)
 	{
 		mCombatMode = ePlayerCombatMode::None;
+		PlayerInfoSave("PlayerInfo.txt");
 		GameMgr->NextStage();
 	}
 }
@@ -612,4 +615,58 @@ void CPlayer::PlayerLevelUp()
 	COUTN("최대 체력 상승 + " << UpHP);
 	COUTN("공격력 상승 + " << UpATK);
 	COUTN("방어력 상승 + " << UpDEF);
+}
+
+void CPlayer::PlayerInfoSave(const string& _filename)
+{
+	std::ofstream oFile(_filename);
+
+	if (oFile.is_open())
+	{
+		oFile << mName << endl;
+		oFile << JobToString(mJob) << endl;
+		oFile << mMoney << endl;
+		oFile << mExp << endl;
+		oFile << mMaxExp << endl;
+		oFile << mLevel << endl;
+		oFile << mHP << endl;
+		oFile << mMaxHP << endl;
+		oFile << mATK << endl;
+		oFile << mDEF << endl;
+
+		oFile.close();
+		COUTN("플레이어 정보 파일 저장 완료");
+	}
+	else
+	{
+		COUTN("플레이어 정보 파일 저장 실패");
+	}
+}
+
+void CPlayer::PlayerInfoLoad(const string& _filename)
+{
+	std::ifstream iFile(_filename);
+
+	if (iFile.is_open())
+	{
+		std::getline(iFile, mName);
+		string mJobName = JobToString(mJob);
+		std::getline(iFile, mJobName);
+		iFile >> mMoney;
+		iFile >> mExp;
+		iFile >> mMaxExp;
+		iFile >> mLevel;
+		iFile >> mHP;
+		iFile >> mMaxHP;
+		iFile >> mATK;
+		iFile >> mDEF;
+
+		iFile.close();
+		COUTN("플레이어 정보 파일 불러오기 완료");
+	}
+	else
+	{
+		COUTN("플레이어 정보 파일 불러오기 실패");
+	}
+
 }
