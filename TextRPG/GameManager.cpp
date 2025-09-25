@@ -24,7 +24,7 @@ void CGameManager::GameRun()
 	}
 
 	// 게임 종료전까지 반복 while
-	while (IsGameOver())
+	while (!IsGameOver())
 	{
 		// 게임 그려주기 Draw
 		Draw();
@@ -99,7 +99,7 @@ bool CGameManager::IsGameOver()
 {
 	if (mPlayer == nullptr)
 	{
-		return false;
+		return true;
 	}
 
 	int PlayerHP = mPlayer->GetHP();
@@ -108,11 +108,11 @@ bool CGameManager::IsGameOver()
 		COUTN("");
 		COUTN("플레이어 [" << mPlayer->GetName() <<"]이 죽었습니다!");
 		COUTN("Game Over!");
-		return false;
+		return true;
 	}
 	else
 	{
-		return true;
+		return false;
 	}
 }
 

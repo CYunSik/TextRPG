@@ -187,7 +187,6 @@ void CPlayer::CombatStateUpdate(const int _message)
 		break;
 		
 	case 2: // 방어
-		mCombatMode = ePlayerCombatMode::Defense;
 		COUTN("공격을 막았다!");
 		SYSPAUSE;
 		break;
@@ -214,8 +213,8 @@ void CPlayer::SearchUpdate(int _message)
 
 	// 탐색중입니다.
 	COUTN("탐색 중입니다.");
-	// 3초정도 뜸들이기
-	SLEEP_N(3);
+	// 1초정도 뜸들이기
+	SLEEP_N(1);
 
 	// 랜덤하게 탐색
 	int behavior = 0;
